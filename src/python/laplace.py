@@ -5,7 +5,7 @@ from opencmiss.iron import iron
 
 
 def main():
-    
+
     # Set problem parameters.
     height = 1.0
     width = 1.0
