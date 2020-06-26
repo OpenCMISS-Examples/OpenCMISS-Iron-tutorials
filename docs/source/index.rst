@@ -3,6 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. role:: python(code)
+   :language: python
+
 OpenCMISS-Iron basics tutorial
 ==============================
 
