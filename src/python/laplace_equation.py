@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
+#DOC-START imports
 # Intialise OpenCMISS-Iron.
 from opencmiss.iron import iron
+#DOC-END imports
 
 # DOC-START imports
 # Create coordinate system.
