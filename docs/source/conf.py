@@ -53,4 +53,4 @@ html_static_path = ['_static']
 
 # Set the root rst to load. This is required to be named contents to allow
 # readthedocs to host the docs using its default configuration.
-master_doc = 'contents'
+master_doc = 'index'
