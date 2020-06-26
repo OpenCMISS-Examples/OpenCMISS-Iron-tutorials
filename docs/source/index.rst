@@ -3,14 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-OpenCMISS-basics-tutorial
-=========================
+OpenCMISS-Iron basics tutorial
+==============================
+
+This tutorial outlines how to use OpenCMISS-Iron.
+
+Learning objectives:
+ - Understand basic concepts of OpenCMISS-Iron.
+ - Solve a Laplace problem using the finite element method in OpenCMISS-Iron.
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   concepts
+   getting_started
+   setting_up_problem
 
+Indices and tables
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`
