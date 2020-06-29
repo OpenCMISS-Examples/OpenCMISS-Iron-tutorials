@@ -13,11 +13,11 @@ Building the tutorial locally
 
 1. Clone the repository to your local machine.
 
-1. Navigate to the docs/
+2. Navigate to the docs/
 
-2. Issue the command: `make html`
+3. Issue the command: `make html`
 
-3. Open the index.html file in `docs/build/` folder
+4. Open the index.html file in `docs/build/` folder
 
 Contributing to this tutorial
 =============================
