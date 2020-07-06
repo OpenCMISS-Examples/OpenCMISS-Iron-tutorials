@@ -1,0 +1,3 @@
+sphinx-copybutton
+nbsphinx
+nbsphinx-link
