@@ -6,7 +6,7 @@ This tutorial outlines basic concepts of OpenCMISS-Iron, and demonstrates how to
 
 Accessing the tutorial online
 =============================
-This tutorial is hosted on Readthedocs - https://basic-tutorial.readthedocs.io/
+This tutorial is hosted on Readthedocs - https://basics-tutorial.readthedocs.io/
 
 Building the tutorial locally
 =============================
