@@ -1,2 +1,0 @@
-OpenCMISS-Iron Concepts
-=======================
