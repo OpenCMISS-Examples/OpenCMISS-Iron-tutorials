@@ -24,6 +24,7 @@ Learning objectives:
    getting_started
    setting_up_problem
    setting_up_problem_jupyter
+   faq
 
 Indices and tables
 ==================
