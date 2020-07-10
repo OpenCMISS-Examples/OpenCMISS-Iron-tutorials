@@ -21,10 +21,11 @@ Learning objectives:
    :caption: Contents:
 
    concepts
+   objects
    getting_started
    setting_up_problem
-   setting_up_problem_jupyter
-   faq
+   importing_meshes
+   parallelisation
 
 Indices and tables
 ==================
