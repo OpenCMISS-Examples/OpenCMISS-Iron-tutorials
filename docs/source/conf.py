@@ -27,7 +27,7 @@ author = 'Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx_copybutton', 'nbsphinx', 'nbsphinx_link'
+extensions = ['sphinx_copybutton', 'nbsphinx', 'nbsphinx_link', 'recommonmark'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -54,3 +54,10 @@ html_static_path = ['_static']
 # Set the root rst to load. This is required to be named contents to allow
 # readthedocs to host the docs using its default configuration.
 master_doc = 'index'
+
+# Configures Sphinx to read all files with the extensions .md and .rst.
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown',
+}
+
