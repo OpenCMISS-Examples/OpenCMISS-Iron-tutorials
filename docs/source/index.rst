@@ -25,7 +25,14 @@ Learning objectives:
    getting_started
    setting_up_problem
    importing_meshes
-   parallelisation
+
+.. parallelisation
+   finding_attributes_methods
+   modifying_materials
+   modifying_solvers
+   control_loops
+
+
 
 Indices and tables
 ==================

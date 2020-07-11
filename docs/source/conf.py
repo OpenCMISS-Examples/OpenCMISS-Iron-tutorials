@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'OpenCMISS-Iron-basics-tutorial'
-copyright = '2020, Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles'
-author = 'Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles'
+copyright = '2020, Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles, Jared Collette, Chris Bradley, Gene Soudlenkov, Adam Reeve'
+author = 'Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles, Jared Collette, Chris Bradley, Gene Soudlenkov, Adam Reeve'
 
 
 # -- General configuration ---------------------------------------------------
