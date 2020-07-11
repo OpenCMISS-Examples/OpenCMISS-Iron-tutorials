@@ -1,9 +1,9 @@
-# OpenCMISS-Iron objects
+# Iron objects
 
 The [OpenCMISS-iron python API documentation](http://staging.opencmiss.org/documentation/apidoc/iron/latest/python/index.html) outlines the methods and attributes of iron objects.
 
-## OpenCMISS-Iron classes 
-There are two types of iron classes:
+## Iron classes 
+There are two types of OpenCMISS-Iron classes:
  - CMFEType - these are the classes that are used to instantiate iron objects. Attributes for these classes need to be set through the class's methods and not by directly setting attribute values.
  - Enum -  these are classes that only contain attributes, that can be directly used in CMFEType class methods. 
 
@@ -40,7 +40,7 @@ help(iron.Basis.InterpolationXiSet)
 
 A list of attributes in each Enum class can be found by navigating to the [class Hierachy page](http://opencmiss.org/documentation/apidoc/iron/latest/python/hierarchy.html) in the python API documentation, clicking the Enum drop down list, and selecting the Enum Class of interest.
 
-## Using OpenCMISS-Iron objects
+## Using Iron objects
 
 ### Creating objects
 
@@ -69,7 +69,7 @@ Every OpenCMISS-Iron object can be created using the following steps that are il
     `coordinate_system.CreateFinish()`
 
 
-### Listing available iron object methods
+### Listing available Iron object methods
 
 Every OpenCMISS-Iron object have more attributes and methods than are covered in this tutorial, giving the user customisation options. To quickly view the available methods, run the cell below on the particular instantiation of a class of interest. Further documentation on the classes, methods, and attributes can be found in the following [link](http://opencmiss.org/documentation/apidoc/iron/latest/python/annotated.html). For example, all the methods and attributes for the iron.CoordinateSystem() class are found [here](http://opencmiss.org/documentation/apidoc/iron/latest/python/classiron_1_1_coordinate_system.html). A direct way to obtain the documentation for a class is to use the python help() command, which will return the documentation of a particular class.
 

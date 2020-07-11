@@ -1,4 +1,4 @@
-# OpenCMISS-Iron Concepts
+# Iron Concepts
 
 ![alt text](images/region_structure.JPG "Region structure")
 ![alt text](images/field_parameter_set_definition.JPG "")
