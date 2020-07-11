@@ -1,15 +1,13 @@
-=========================
-OpenCMISS Basics tutorial
-=========================
+# OpenCMISS Basics tutorial
+
+[![Documentation Status](https://readthedocs.org/projects/basics-tutorial/badge/?version=latest)](http://basics-tutorial.readthedocs.io/?badge=latest)
 
 This tutorial outlines basic concepts of OpenCMISS-Iron, and demonstrates how to solve a Laplace problem using the finite element method in OpenCMISS-Iron.
 
-Accessing the tutorial online
-=============================
+## Accessing the tutorial online
 This tutorial is hosted on Readthedocs - https://basics-tutorial.readthedocs.io/
 
-Building the tutorial locally
-=============================
+## Building the tutorial locally
 
 1. Clone the repository to your local machine.
 
@@ -19,8 +17,7 @@ Building the tutorial locally
 
 4. Open the index.html file in `docs/build/` folder
 
-Contributing to this tutorial
-=============================
+## Contributing to this tutorial
 
 1. Fork this repository to your github account.
 
