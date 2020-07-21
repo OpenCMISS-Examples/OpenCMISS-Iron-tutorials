@@ -13,7 +13,7 @@ In this tutorial we will be developing a basic python finite element modeling pr
 
 **Coordinate system:** 2D rectangular cartesian 
 
-**Basis function scheme:** Bilinear Lagrange interpolation scheme (TODO add link to concepts).
+**Basis function scheme:** Bilinear Lagrange interpolation scheme (TODO add link to latest ABI theory documentation).
 
 **2D Domain:** A square domain of unit size (1.0 X 1.0). 
 
