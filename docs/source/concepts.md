@@ -1,9 +1,9 @@
-# Iron Concepts
+# OpenCMISS-Iron Concepts
 
 OpenCMISS-Iron has been developed as a library with object oriented programming in mind. This can be a little confusing for people who are used to working with commercial finite element modelling packages like ANSYS or COMSOL. The best analogy for how to think about using the OpenCMISS-Iron library is that it can be used like C++ libraries. In this section of this basic tutorial we will be covering the basic concepts of OpenCMISS-Iron and how to use its library calls.
 
 ## _Languages of OpenCMISS-Iron_
-The core library variables, functions and classes of OpenCMISS-Iron have been written using FORTRAN 2008. This is to enable effective use of high performance computing resources. However, we have also implemented python and c bindings for the FORTRAN library, which makes it easier for users to incorporate OpenCMISS-Iron functionality into their codes. In this basics tutorial we will be making calls to the OpenCMISS-Iron's Python-bindings API to illustrate how we can interact the library, while at the same time demonstrating the functionalities of OpenCMISS-Iron.
+The core library variables, functions and classes of OpenCMISS-Iron have been written using FORTRAN 90. This is to enable effective use of high performance computing resources. However, we have also implemented python and c bindings for the FORTRAN library, which makes it easier for users to incorporate OpenCMISS-Iron functionality into their codes. In this basics tutorial we will be making calls to the OpenCMISS-Iron's Python-bindings API to illustrate how we can interact the library, while at the same time demonstrating the functionalities of OpenCMISS-Iron.
 
 ## Putting concepts into the Laplace Problem context
 The OpenCMISS-Iron libraries have been created to enable highly advanced computational modelling of biological systems. It represents a re-engineering of over 30 years' of legacy codes for finite element based computational modelling of biological systems under the mast of the Physiome Project. Therefore, to fully appreciate and utilise the features of OpenCMISS-Iron, we recommend familiarising yourself with the fundamental concepts and data structures of OpenCMISS-Iron. This tutorial is a first step towards acquiring this understanding.
@@ -13,13 +13,13 @@ In this tutorial we will be developing a basic python finite element modeling pr
 
 **Coordinate system:** 2D rectangular cartesian 
 
-**Basis function scheme:** Bilinear Lagrange interpolation scheme.
+**Basis function scheme:** Bilinear Lagrange interpolation scheme (TODO add link to concepts).
 
 **2D Domain:** A square domain of unit size (1.0 X 1.0). 
 
 **Number of elements:** 1 element along the x-direction and 3 elements along the y-direction. 
 
-**Equation to solve**: $\nabla^2 u = 0$
+**Equation to solve**: $\nabla^2 u = 0$ (TODO add link to Wikipedia laplace)
 
 **Initial value of the dependent field, u:** 0.5
 
