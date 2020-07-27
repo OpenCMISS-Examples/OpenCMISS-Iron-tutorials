@@ -1,4 +1,4 @@
-# OpenCMISS-Iron Concepts
+# OpenCMISS-Iron concepts
 
 OpenCMISS-Iron has been developed as a library with object oriented programming in mind. This can be a little confusing for people who are used to working with commercial finite element modelling packages like ANSYS or COMSOL. The best analogy for how to think about using the OpenCMISS-Iron library is that it can be used like C++ libraries. In this section of this basic tutorial we will be covering the basic concepts of OpenCMISS-Iron and how to use its library calls.
 
@@ -27,7 +27,6 @@ In this tutorial we will be developing a basic python finite element modeling pr
 
 ## OpenCMISS-Iron is designed for object-oriented programming
 Now that the Laplace problem has been defined lets delve into how this problem can be defined with OpenCMISS-Iron. OpenCMISS-Iron has been developed with object-oriented programming in mind. The figure below shows the workflow and steps involved in defining our Laplace problem. Each box represents an object that is created from a class defined in OpenCMISS-Iron. These objects when grouped as shown help us define the Laplace problem that we have defined for this tutorial. 
-
 
 
 <!--
