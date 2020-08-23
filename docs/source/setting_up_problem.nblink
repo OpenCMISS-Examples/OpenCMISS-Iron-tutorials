@@ -1,3 +1,6 @@
 {
-    "path": "../../src/python/setting_up_basic_problem.ipynb"
+    "path": "../../src/python/setting_up_basic_problem.ipynb",
+    "extra-media": [
+      "../../src/python/basic_problem_diagram.svg"
+    ]
 }
