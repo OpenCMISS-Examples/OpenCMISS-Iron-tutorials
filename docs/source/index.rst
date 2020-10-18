@@ -6,28 +6,23 @@
 .. role:: python(code)
    :language: python
 
-OpenCMISS-Iron basics tutorial
-==============================
+OpenCMISS-Iron tutorials
+========================
 
 This tutorial outlines how to use OpenCMISS-Iron.
-
-Learning objectives:
- - Understand basic concepts of OpenCMISS-Iron.
- - Solve a Laplace problem using the finite element method in OpenCMISS-Iron.
-
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   concepts
+   about
    objects
    getting_started
-   setting_up_problem
-   importing_meshes
+   basics
+..   importing_meshes
+..   vis
 
 .. parallelisation
-   finding_attributes_methods
    modifying_materials
    modifying_solvers
    control_loops

@@ -1,4 +1,8 @@
-# OpenCMISS-Iron objects
+# Interacting with OpenCMISS-Iron
+
+If you are a beginner, skip ahead to the OpenCMISS-Iron basics tutorial to see 
+OpenCMISS-Iron in action, then return here to find out more about how you can 
+call the OpenCMISS-Iron library to setup your own problems. 
 
 The [OpenCMISS-iron python API documentation](http://staging.opencmiss.org/documentation/apidoc/iron/latest/python/index.html) outlines the methods and attributes of OpenCMISS-Iron objects.
 
