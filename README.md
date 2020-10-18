@@ -1,6 +1,6 @@
 # OpenCMISS-Iron tutorials
 
-[![Documentation Status](https://readthedocs.org/projects/OpenCMISS-Iron-tutorials/badge/?version=latest)](http://OpenCMISS-Iron-tutorials.readthedocs.io/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/opencmiss-iron-tutorials/badge/?version=latest)](https://opencmiss-iron-tutorials.readthedocs.io/en/latest/?badge=latest)
 
 The OpenCMISS-Iron library has been created to enable highly advanced computational modelling of biological systems. It represents a re-engineering of over 30 years' of legacy codes for finite element based computational modelling of biological systems under the mast of the Physiome Project. These tutorials describe how to use OpenCMISS-Iron to solve such problems.
 
