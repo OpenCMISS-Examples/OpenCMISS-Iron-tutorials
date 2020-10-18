@@ -1,13 +1,13 @@
-# OpenCMISS Basics tutorial
+# OpenCMISS-Iron tutorials
 
-[![Documentation Status](https://readthedocs.org/projects/basics-tutorial/badge/?version=latest)](http://basics-tutorial.readthedocs.io/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/OpenCMISS-Iron-tutorials/badge/?version=latest)](http://OpenCMISS-Iron-tutorials.readthedocs.io/?badge=latest)
 
-This tutorial outlines basic concepts of OpenCMISS-Iron, and demonstrates how to solve a Laplace problem using the finite element method in OpenCMISS-Iron.
+The OpenCMISS-Iron library has been created to enable highly advanced computational modelling of biological systems. It represents a re-engineering of over 30 years' of legacy codes for finite element based computational modelling of biological systems under the mast of the Physiome Project. These tutorials describe how to use OpenCMISS-Iron to solve such problems.
 
 ## Accessing the tutorial online
-This tutorial is hosted on Readthedocs - https://basics-tutorial.readthedocs.io/
+This tutorial is hosted on Readthedocs - https://OpenCMISS-Iron-tutorials.readthedocs.io/
 
-## Building the tutorial locally
+## Building the tutorials locally
 
 1. Clone the repository to your local machine.
 
