@@ -14,6 +14,7 @@ oc
     │       start-notebook.sh
     │       start-singleuser.sh
     │       start-ssh-server.sh
+    |       mount-shared-drive.sh
     │       fix-permissions
     |
     └───etc
