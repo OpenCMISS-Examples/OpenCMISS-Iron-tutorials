@@ -1,7 +1,7 @@
 Installation
 ============
 
-This section describes how to install OpenCMISS using Docker. Two options are available:
+This section describes how to install OpenCMISS. Two options are available:
 
 .. toctree::
   :maxdepth: 1

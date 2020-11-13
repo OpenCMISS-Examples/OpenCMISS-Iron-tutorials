@@ -106,7 +106,7 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
     ```
     ![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
 
-3. Install heart-biomechanics dependencies
+3. Install any modules you wish to use with OpenCMISS-Iron. As an example, we will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats. 
     ``` bash
     /opt/conda/bin/pip install --user 'meshio==4.3.5'
     ```
