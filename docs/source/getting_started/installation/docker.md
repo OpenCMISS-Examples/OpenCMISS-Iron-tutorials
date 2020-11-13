@@ -14,6 +14,7 @@ oc
     │       start-notebook.sh
     │       start-singleuser.sh
     │       start-ssh-server.sh
+    |       start-pycharm.sh
     |       mount-shared-drive.sh
     │       fix-permissions
     |
@@ -25,13 +26,22 @@ oc
     └───local
     │   
     └───cache
+    │   
+    └───java
+    │   
+    └───config
+    │   
+    └───PyCharm
+
 ```
 This folder structure contains:
 
 1. `oc/opt` - this will be your main working directory.
 2. `oc/usr/bin` - folder containing scripts for running jupyter servers.
 3. `oc/usr/etc/jupyter` - folder containing jupyter notebook configuration. 
-3. `oc/usr/local` and `oc/usr/cache` - folders where new python modules installed will be stored.
+4. `oc/usr/local` and `oc/usr/cache` - folders where new python modules installed will be stored.
+5. `oc/usr/java`, `oc/usr/config`, and `oc/usr/PyCharm` - folders used by Pycharm.
+
 
 ``` Important:: The working oc/opt directory created on the host machine will be mapped to "/home/jovyan/work" within the Docker container. Only items within this folder will persist once the container is shutdown. Any files outside this container will not be recoverable (running a Docker container can be thought of as getting a new computer with a fresh installation - only items in the mapped drive will be available the next time you start the Docker container). 
 ```
@@ -132,3 +142,4 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
    export PYTHONPATH=/home/jovyan/work/mesh-tools:$PYTHONPATH
    export PYTHONPATH=/home/jovyan/work/morphic:$PYTHONPATH
    ```
+   
