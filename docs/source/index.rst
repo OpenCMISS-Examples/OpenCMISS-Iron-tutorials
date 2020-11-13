@@ -20,6 +20,7 @@ Documentation for the OpenCMISS-Iron software library.
    architecture
    getting_started
    tutorials
+   faq
 
 Indices and tables
 ==================
