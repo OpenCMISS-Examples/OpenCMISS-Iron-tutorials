@@ -13,11 +13,11 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
-project = 'OpenCMISS-Iron-basics-tutorial'
+project = 'OpenCMISS-Iron documentation'
 copyright = '2020, Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles, Jared Collette, Chris Bradley, Gene Soudlenkov, Adam Reeve'
 author = 'Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles, Jared Collette, Chris Bradley, Gene Soudlenkov, Adam Reeve'
 
@@ -27,7 +27,7 @@ author = 'Vijay Rajagopal, Prasad Babarenda Gamage, Nathan Andrew Isles, Jared C
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx_copybutton', 'nbsphinx', 'nbsphinx_link', 'recommonmark'
+extensions = ['nbsphinx', 'nbsphinx_link', 'recommonmark'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,6 +51,8 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_logo = '_static/opencmiss_logo.png'
+
 # Set the root rst to load. This is required to be named contents to allow
 # readthedocs to host the docs using its default configuration.
 master_doc = 'index'
@@ -61,3 +63,10 @@ source_suffix = {
     '.md': 'markdown',
 }
 
+github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)

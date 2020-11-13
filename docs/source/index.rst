@@ -6,28 +6,20 @@
 .. role:: python(code)
    :language: python
 
-OpenCMISS-Iron tutorials
-========================
+============================
+OpenCMISS-Iron documentation
+============================
 
-This tutorial outlines how to use OpenCMISS-Iron.
+Documentation for the OpenCMISS-Iron software library.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   about
-   objects
+   introduction
+   architecture
    getting_started
-   basics
-..   importing_meshes
-..   vis
-
-.. parallelisation
-   modifying_materials
-   modifying_solvers
-   control_loops
-
-
+   tutorials
 
 Indices and tables
 ==================

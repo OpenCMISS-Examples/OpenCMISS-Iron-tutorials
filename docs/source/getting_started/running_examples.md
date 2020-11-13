@@ -1,8 +1,5 @@
 # Getting started
 
-## Buliding OpenCMISS-Iron
-
-See [installation documentation](http://opencmiss.org/documentation/building/cmake/setup/docs/index.html/).
 
 ## Running OpenCMISS-Iron python examples
 
@@ -13,4 +10,3 @@ cd src/python
 python laplace_equation.py
 ```
 
-The next section shows how an OpenCMISS-Iron problem can be setup from scratch in python.
