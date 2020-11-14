@@ -31,11 +31,13 @@ docker run `
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh
 ```
 
+## Accessing JupyterLab
+
 The above commands will start a JupyterLab server on port 8888 within the docker container.
 
 A JupyterLab interactive session can be started in the browser of your host machine by copying and pasting the url with the access token (highlighted in yellow in the figure below) into a web browser (e.g. chrome). 
 
-![Docker Jupyter server url](./docker_jupyter_server_url.png) 
+![Docker JupyterLab server url](./docker_jupyter_server_url.png) 
 
 However, note that the above url will give a ```This site can’t be reached 127.0.0.1 refused to connect``` error. This is because the ```docker run``` command above maps port number 8888 within the container to port number 10000 on the host windows machine. Replace 8888 with 10000 in the url and the JupyterLab interactive session will load as expected in your web browser.
 
