@@ -104,7 +104,7 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
         -v ~/oc/usr/bin/:/usr/local/bin \
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
-    ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: dial udp [::1]:53: socket: address family not supported by protocol.'
+    ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon'.
     ```   
    
 ### Windows
@@ -124,7 +124,7 @@ docker run `
 This command will generate output similar to the figure shown below:
 ![Docker Windows pull](./docker_windows_first_pull.png) 
 
-``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: dial udp [::1]:53: socket: address family not supported by protocol.'
+``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon'.
 ```
 
 ``` Important:: Once this command is executed, pop-ups will show on the bottom right of the windows desktop requestion permission for docker to access folders as shown below. Select 'share it' for each case. 
