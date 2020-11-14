@@ -7,11 +7,13 @@ Setting up run environment
 --------------------------
 
 .. toctree::
+  :numbered:
   :maxdepth: 1
 
   running/terminal
   running/jupyterlab
   running/pycharm
+  running/visual_studio_code
   running/troubleshooting
 
 Running OpenCMISS-Iron python examples
