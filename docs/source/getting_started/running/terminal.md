@@ -2,7 +2,8 @@
 
 ## For a Docker installation
 1. Open a new terminal or PowerShell on your host machine.
-2. Start the OpenCMISS-Iron Docker container by executing the following command:
+2. Start the OpenCMISS-Iron Docker container by executing the following command (ensure that there are no trailing spaces following the end-of-line deliminators):
+
     i. Linux and Mac
     
     ```bash
@@ -32,6 +33,9 @@
         -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
+    ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: dial udp [::1]:53: socket: address family not supported by protocol.'
+    ```   
+   
     This will open a new bash terminal within the running OpenCMISS-Iron Docker container with sudo (admin) access as shown below:
     ![Start bash terminal in running container](./docker_start_bash_terminal.png)
     
