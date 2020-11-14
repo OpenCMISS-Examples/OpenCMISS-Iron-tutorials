@@ -81,8 +81,17 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
 1. Open a new terminal or PowerShell.
 2. Execute the following command:
 
-    i. Linux and Mac
-    
+### Linux and Mac
+
+1. Check that you are using the bash shell:
+    ```bash
+    echo $SHELL
+    ```
+2. If the command above does not print `/bin/bash` then start a bash shell:
+    ```bash
+    bash
+    ```
+3. Run the following command (ensure that there are no trailing spaces following the end-of-line backslashes deliminators):
     ```bash
     docker run \
         --rm \
@@ -95,27 +104,32 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
         -v ~/oc/usr/bin/:/usr/local/bin \
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
+    ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: dial udp [::1]:53: socket: address family not supported by protocol.'
+    ```   
+   
+### Windows
+Run the following command (ensure that there are no trailing spaces following the end-of-line tilda deliminators)
+```bash
+docker run `
+    --rm `
+    --name opencmiss-iron `
+    -it `
+    -v c/Users/${env:UserName}/Documents/oc/opt:/home/jovyan/work `
+    -v c/Users/${env:UserName}/Documents/oc/usr/local:/home/jovyan/.local `
+    -v c/Users/${env:UserName}/Documents/oc/usr/cache:/home/jovyan/.cache `
+    -v c/Users/${env:UserName}/Documents/oc/usr/etc/jupyter:/etc/jupyter `
+    -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
+    prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
+```
+This command will generate output similar to the figure shown below:
+![Docker Windows pull](./docker_windows_first_pull.png) 
 
-    ii Windows
-    
-    ```bash
-    docker run `
-        --rm `
-        --name opencmiss-iron `
-        -it `
-        -v c/Users/${env:UserName}/Documents/oc/opt:/home/jovyan/work `
-        -v c/Users/${env:UserName}/Documents/oc/usr/local:/home/jovyan/.local `
-        -v c/Users/${env:UserName}/Documents/oc/usr/cache:/home/jovyan/.cache `
-        -v c/Users/${env:UserName}/Documents/oc/usr/etc/jupyter:/etc/jupyter `
-        -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
-        prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
-    ```
-    This command will generate output similar to the figure shown below:
-    ![Docker Windows pull](./docker_windows_first_pull.png) 
-    
-    ``` Important:: Once this command is executed, pop-ups will show on the bottom right of the windows desktop requestion permission for docker to access folders as shown below. Select 'share it' for each case. 
-    ```
-    ![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
+``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup registry-1.docker.io on [::1]:53: dial udp [::1]:53: socket: address family not supported by protocol.'
+```
+
+``` Important:: Once this command is executed, pop-ups will show on the bottom right of the windows desktop requestion permission for docker to access folders as shown below. Select 'share it' for each case. 
+```
+![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
 
 3. Install any modules you wish to use with OpenCMISS-Iron. As an example, we will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats. 
     ``` bash
