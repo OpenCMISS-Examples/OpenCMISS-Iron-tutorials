@@ -91,8 +91,8 @@ Move the downloaded zip file to your `my documents` folder (this is typically lo
         -v ~/oc/opt:/home/jovyan/work \
         -v ~/oc/usr/local:/home/jovyan/.local \
         -v ~/oc/usr/cache:/home/jovyan/.cache \
-        -v ~/oc/usr/etc/jupyter:/etc/jupyter \ 
-        -v ~/oc/usr/bin/:/usr/local/bin/ \ 
+        -v ~/oc/usr/etc/jupyter:/etc/jupyter \
+        -v ~/oc/usr/bin/:/usr/local/bin \
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
 
