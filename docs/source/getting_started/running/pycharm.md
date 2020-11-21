@@ -17,6 +17,7 @@ The following Docker command can be used to start PyCharm.
 PyCharm will automatically be downloaded and installed in the `~/work/PyCharm` folder, which is a folder on the host machine that is mounted within the Docker container. This means that PyCharm will only need to be installed once and all settings will persist even after the Docker container is shutdown/restarted. The specific version of PyCharm that is downloaded can be specified in the `oc/usr/bin/start-pycharm.sh` script. By default, PyCharm 2020.2.3 is installed.
 
 #### Linux
+Run the following command:
 ```bash
 docker run \
     --rm \
@@ -52,7 +53,7 @@ docker run \
          -v ~/oc/usr/etc/jupyter:/etc/jupyter \
          -v ~/oc/usr/bin/:/usr/local/bin \
          prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-pycharm.sh
-
+<!---
 #### Windows
 TBC
 ```bash
@@ -81,6 +82,7 @@ docker.exe run --rm -d ^
         rycus86/pycharm-pro:latest
 
 ```
+-->
 
 #### Configuring PyCharm
 On the first run, you will need to configuring your python environment. 
