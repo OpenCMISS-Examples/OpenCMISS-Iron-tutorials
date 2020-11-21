@@ -1,223 +1,157 @@
 from ipywidgets import embed
-from pythreejs import *
+import pythreejs as pjs
 from IPython.display import display
 import numpy as np
-
+import matplotlib.cm as cm
+import matplotlib
 import mesh_tools
 
-def visualise2(mesh, field):
+def visualise(
+        mesh, geometric_field, dependent_field=None, variable=None,
+        component=None, cmap='gist_rainbow', resolution=1, perspective=False):
+    debug = False
+    if debug:
+        vertices = [
+            [0, 0, 0],
+            [0, 0, 1],
+            [0, 1, 0],
+            [0, 1, 1],
+            [1, 0, 0],
+            [1, 0, 1],
+            [1, 1, 0],
+            [1, 1, 1]
+        ]
 
-    # Get mesh topology information.
-    num_nodes = mesh_tools.num_nodes_get(mesh, mesh_component=1)
-    node_nums = list(range(1, num_nodes + 1))
-    num_elements, element_nums = mesh_tools.num_element_get(mesh, mesh_component=1)
+        faces = [
+            [0, 1, 3],
+            [0, 3, 2],
+            [0, 2, 4],
+            [2, 6, 4],
+            [0, 4, 1],
+            [1, 4, 5],
+            [2, 3, 6],
+            [3, 7, 6],
+            [1, 5, 3],
+            [3, 5, 7],
+            [4, 6, 5],
+            [5, 6, 7]
+        ]
 
-    # Convert geometric field to a morphic mesh and export to json
-    mesh = mesh_tools.OpenCMISS_to_morphic(
-        mesh, field, element_nums, node_nums, dimension=3,
-        interpolation='linear')
-    vertices, faces = mesh.get_faces(res=8, exterior_only=True)
+        vertexcolors = ['#000000', '#0000ff', '#00ff00', '#ff0000',
+                        '#00ffff', '#ff00ff', '#ffff00', '#ffffff']
+    else:
+        # Get mesh topology information.
+        num_nodes = mesh_tools.num_nodes_get(mesh, mesh_component=1)
+        node_nums = list(range(1, num_nodes + 1))
+        num_elements, element_nums = mesh_tools.num_element_get(
+            mesh, mesh_component=1)
 
-    vertices = [
-        [0, 0, 0],
-        [0, 0, 1],
-        [0, 1, 0],
-        [0, 1, 1],
-        [1, 0, 0],
-        [1, 0, 1],
-        [1, 1, 0],
-        [1, 1, 1]
-    ]
+        node_positions = mesh_tools.get_field_values(
+            geometric_field, node_nums, derivative=1, dimension=3,
+            variable=variable)
 
-    faces = [
-        [0, 1, 3],
-        [0, 3, 2],
-        [0, 2, 4],
-        [2, 6, 4],
-        [0, 4, 1],
-        [1, 4, 5],
-        [2, 3, 6],
-        [3, 7, 6],
-        [1, 5, 3],
-        [3, 5, 7],
-        [4, 6, 5],
-        [5, 6, 7]
-    ]
+        # Convert geometric field to a morphic mesh and export to json
+        mesh = mesh_tools.OpenCMISS_to_morphic(
+            mesh, geometric_field, element_nums, node_nums, dimension=3,
+            interpolation='linear')
+        vertices, faces, _, xi_element_nums, xis = get_faces(
+            mesh, res=resolution, exterior_only=True, include_xi=True)
 
-    vertexcolors = ['#000000', '#0000ff', '#00ff00', '#ff0000',
-                    '#00ffff', '#ff00ff', '#ffff00', '#ffffff']
+        vertices = vertices.tolist()
+        faces = faces.tolist()
 
-    # Map the vertex colors into the 'color' slot of the faces
-    faces = [f + [None, [vertexcolors[i] for i in f], None] for f in faces]
+    centroid = np.mean(vertices, axis=0)
+    max_positions = np.max(vertices, axis=0)
+    min_positions = np.min(vertices, axis=0)
+    range_positions = max_positions - min_positions
 
-    # Create the geometry:
-    geometry = Geometry(vertices=vertices,
-                            faces=faces,
-                            colors=vertexcolors)
-    # Calculate normals per face, for nice crisp edges:
+    if dependent_field is not None:
+        solution = np.zeros(xis.shape[0])
+        for idx, (xi, xi_element_num) in enumerate(zip(xis, xi_element_nums)):
+            solution[idx] = mesh_tools.interpolate_opencmiss_field_xi(
+                dependent_field, xi, element_ids=[xi_element_num], dimension=3,
+                deriv=1)[component-1]
+
+        minima = min(solution)
+        maxima = max(solution)
+
+        import matplotlib
+        norm = matplotlib.colors.Normalize(vmin=minima, vmax=maxima, clip=True)
+        mapper = cm.ScalarMappable(
+            norm=norm, cmap=cm.get_cmap(name=cmap))
+
+        vertex_colors = np.zeros((len(vertices), 3), dtype='float32')
+        for idx, v in enumerate(solution):
+            vertex_colors[idx, :] = mapper.to_rgba(v, alpha=None)[:3]
+
+    else:
+        vertex_colors = np.tile(
+            np.array([0.5, 0.5, 0.5], dtype='float32'),
+            (len(vertices), 1))
+
+    geometry = pjs.BufferGeometry(attributes=dict(
+        position=pjs.BufferAttribute(vertices, normalized=False),
+        index=pjs.BufferAttribute(
+            np.array(faces).astype(dtype='uint16').ravel(),
+            normalized=False),
+        color=pjs.BufferAttribute(vertex_colors),
+    ))
     geometry.exec_three_obj_method('computeFaceNormals')
 
-    three_js_mesh = Mesh(
-        geometry=geometry,
-        material=MeshLambertMaterial(color='green', opacity=0.5, transparent=True),
-        position=(0, 0, 0),
-    )
-    target = (0, 5, 0)
+    surf1 = pjs.Mesh(geometry=geometry,
+                 material=pjs.MeshLambertMaterial(
+                     vertexColors='VertexColors',
+                     side='FrontSide'))  # Center the cube.
+    surf2 = pjs.Mesh(geometry=geometry,
+                 material=pjs.MeshLambertMaterial(
+                     vertexColors='VertexColors',
+                     side='BackSide'))  # Center the cube.
+    surf = pjs.Group(children=[surf1, surf2])
+
     view_width = 600
     view_height = 400
-    camera = CombinedCamera(position=[60, 60, 60], width=view_width,
-                            height=view_height)
-    camera.mode = 'orthographic'
+    camera = pjs.CombinedCamera(
+        fov=20, position=[range_positions[0] * 125,
+                          range_positions[1] * 125,
+                          range_positions[2] * 125],
+        width=view_width,
+        height=view_height, near=1,
+        far=max(range_positions) * 1000)
+    if perspective:
+        camera.mode = 'perspective'
+    else:
+        camera.mode = 'orthographic'
     lights = [
-        PointLight(position=[100, 0, 0], color="#ffffff"),
-        PointLight(position=[0, 100, 0], color="#bbbbbb"),
-        PointLight(position=[0, 0, 100], color="#888888"),
-        AmbientLight(intensity=0.2),
+        pjs.DirectionalLight(
+            position=[range_positions[0] * 125,
+                          range_positions[1] * 125,
+                          range_positions[2] * 125], intensity=1),
+        pjs.AmbientLight(intensity=1),
     ]
-    orbit = OrbitControls(controlling=camera, target=target)
-    camera.lookAt(target)
-    scene = Scene(children=[three_js_mesh, camera] + lights)
-    renderer = Renderer(scene=scene, camera=camera, controls=[orbit],
-                        width=view_width, height=view_height)
-    camera.zoom = 4
-
-    embed.embed_minimal_html('export.html', views=renderer, title='Renderer')
-    display(renderer)
-
-def colour_map(v):
-    colors = ["#084594", "#0F529E", "#1760A8", "#1F6EB3", "#2979B9", "#3484BE", "#3E8EC4",
-              "#4A97C9", "#57A0CE", "#64A9D3", "#73B2D7", "#83BBDB", "#93C4DE", "#A2CBE2",
-              "#AED1E6", "#BBD6EB", "#C9DCEF", "#DBE8F4", "#EDF3F9", "#FFFFFF"]
-    colors = np.array(colors)
-    v = ((v-v.min())/(v.max()-v.min())*(len(colors)-1)).astype(np.int16)
-    return colors[v]
-
-def visualise(mesh, geometric_field, dependent_field):
-
-    # Get mesh topology information.
-    num_nodes = mesh_tools.num_nodes_get(mesh, mesh_component=1)
-    node_nums = list(range(1, num_nodes + 1))
-    num_elements, element_nums = mesh_tools.num_element_get(mesh, mesh_component=1)
-
-    from opencmiss.iron import iron
-    solution = mesh_tools.get_field_values(dependent_field, node_nums, derivative=1, dimension=1,
-                     variable=iron.FieldVariableTypes.U)
-
-    node_positions = mesh_tools.get_field_values(geometric_field, node_nums, derivative=1, dimension=3,
-                     variable=iron.FieldVariableTypes.U)
-
-    colors = colour_map(np.squeeze(solution))
-
-    import matplotlib
-    node_vertexcolors = []
-    for value in solution:
-        node_vertexcolors.append(matplotlib.colors.to_hex([value[0], value[0], value[0]]))
-
-    # Convert geometric field to a morphic mesh and export to json
-    mesh = mesh_tools.OpenCMISS_to_morphic(
-        mesh, geometric_field, element_nums, node_nums, dimension=3,
-        interpolation='linear')
-    vertices, faces = mesh.get_faces(res=1, exterior_only=True)
-
-    vertices = vertices.tolist()
-    faces = faces.tolist()
-
-    vertexcolors = []
-    for vertex in vertices:
-        ##print(np.where((node_positions == vertex).all(axis=1)))
-        idx = np.where((node_positions == vertex).all(axis=1))[0][0]
-        vertexcolors.append(colors[idx])
-
-    # vertices = [
-    #     [0, 0, 0],
-    #     [0, 0, 1],
-    #     [0, 1, 0],
-    #     [0, 1, 1],
-    #     [1, 0, 0],
-    #     [1, 0, 1],
-    #     [1, 1, 0],
-    #     [1, 1, 1]
-    # ]
-    #
-    # faces = [
-    #     [0, 1, 3],
-    #     [0, 3, 2],
-    #     [0, 2, 4],
-    #     [2, 6, 4],
-    #     [0, 4, 1],
-    #     [1, 4, 5],
-    #     [2, 3, 6],
-    #     [3, 7, 6],
-    #     [1, 5, 3],
-    #     [3, 5, 7],
-    #     [4, 6, 5],
-    #     [5, 6, 7]
-    # ]
-    #
-    # vertexcolors = ['#000000', '#0000ff', '#00ff00', '#ff0000',
-    #                 '#00ffff', '#ff00ff', '#ffff00', '#ffffff']
-
-    # Map the vertex colors into the 'color' slot of the faces
-    faces = [f + [None, [vertexcolors[i] for i in f], None] for f in faces]
-
-    # Create the geometry:
-    geometry = Geometry(vertices=vertices,
-                            faces=faces,
-                            colors=vertexcolors)
-
-    # # Create the geometry:
-    # geometry = Geometry(vertices=vertices.tolist(),
-    #                         faces=faces.tolist())
-    # # Calculate normals per face, for nice crisp edges:
-    geometry.exec_three_obj_method('computeFaceNormals')
-
-    surf1 = Mesh(geometry=geometry,
-                 material=MeshLambertMaterial(vertexColors='VertexColors', side='FrontSide'),
-                 position=[-0.5, -0.5, -0.5])# Center the cube,
-    surf2 = Mesh(geometry=geometry,
-                 material=MeshLambertMaterial(vertexColors='VertexColors', side='BackSide'),
-                 position=[-0.5, -0.5, -0.5])# Center the cube,
-    surf = Group(children=[surf1, surf2])
-
-    # cube = Mesh(
-    #     geometry=geometry,
-    #     material=MeshLambertMaterial(vertexColors='VertexColors'),
-    #     position=[-0.5, -0.5, -0.5],  # Center the cube,
-    # )
-    target = (0.0, 0.0, 0.0)
-    view_width = 600
-    view_height = 400
-    camera = CombinedCamera(position=[60, 60, 60], width=view_width,
-                            height=view_height)
-    camera.mode = 'orthographic'
-    lights = [
-        PointLight(position=[100, 0, 0], color="#ffffff"),
-        PointLight(position=[0, 100, 0], color="#bbbbbb"),
-        PointLight(position=[0, 0, 100], color="#888888"),
-        PointLight(position=[-100, 0, 0], color="#ffffff"),
-        PointLight(position=[0, -100, 0], color="#bbbbbb"),
-        PointLight(position=[0, 0, -100], color="#888888"),
-        AmbientLight(intensity=0.2),
-    ]
-    orbit = OrbitControls(controlling=camera, target=target)
-    camera.lookAt(target)
-    scene = Scene(children=[surf1, surf2] + lights)
-    renderer = Renderer(scene=scene, camera=camera, controls=[orbit],
-                        width=view_width, height=view_height)
+    orbit = pjs.OrbitControls(
+        controlling=camera, screenSpacePanning=True, target=centroid.tolist())
+    camera.lookAt(centroid.tolist())
+    scene = pjs.Scene(children=[surf1, surf2] + lights)
+    axes = pjs.AxesHelper(size=range_positions[0] * 2)
+    scene.add(axes)
+    renderer = pjs.Renderer(
+        scene=scene, camera=camera, controls=[orbit],
+        width=view_width, height=view_height)
     camera.zoom = 40
 
     embed.embed_minimal_html('export.html', views=renderer, title='Renderer')
     display(renderer)
 
-def get_faces(self, res=8, exterior_only=True, include_xi=False,
-              elements=None):
-    self.generate()
+
+def get_faces(
+        mesh, res=8, exterior_only=True, include_xi=False, elements=None):
+    mesh.generate()
 
     if elements == None:
-        Faces = self.faces
+        Faces = mesh.faces
     else:
         Faces = []
-        for face in self.faces:
+        for face in mesh.faces:
             for element_face in face.element_faces:
                 if element_face[0] in elements:
                     Faces.append(face)
@@ -225,6 +159,36 @@ def get_faces(self, res=8, exterior_only=True, include_xi=False,
 
     if exterior_only:
         Faces = [face for face in Faces if len(face.element_faces) == 1]
+
+    basis = mesh.elements[mesh.get_element_ids()[0]].basis
+
+    if Faces[0].shape == 'quad':
+        face_metadata = {
+            'face_xi_idxs': {
+                0: [0, 1],
+                1: [0, 1],
+                2: [0, 2],
+                3: [0, 2],
+                4: [1, 2],
+                5: [1, 2]
+            },
+            'face_normal_xi_idx': {
+                0: 2,
+                1: 2,
+                2: 1,
+                3: 1,
+                4: 0,
+                5: 0
+            },
+            'face_normal_xi_value': {
+                0: 0,
+                1: 1,
+                2: 0,
+                3: 1,
+                4: 0,
+                5: 1
+            }
+        }
 
     XiT, TT = xi_grid(shape='tri', res=res)
     XiQ, TQ = xi_grid(shape='quad', res=res)
@@ -247,62 +211,67 @@ def get_faces(self, res=8, exterior_only=True, include_xi=False,
     T = np.zeros((NT, 3), dtype='uint32')
     if include_xi:
         Xi = np.zeros((NP, 2))
-    np, nt = 0, 0
+        Xe = np.zeros(NP, dtype='uint32')
+        Xi3D = np.zeros((NP, 3))
+    npp, nt = 0, 0
     for face in Faces:
         if face.shape == 'tri':
-            X[np:np + NPT, :] = self._core.evaluate(face.cid, XiT)
+            X[npp:npp + NPT, :] = mesh._core.evaluate(face.cid, XiT)
             if include_xi:
-                Xi[np:np + NPT, :] = XiT
-            T[nt:nt + NTT, :] = TT + np
-            np += NPT
+                Xi[npp:npp + NPT, :] = XiT
+            T[nt:nt + NTT, :] = TT + npp
+            npp += NPT
             nt += NTT
         elif face.shape == 'quad':
-            elem = self.elements[face.element_faces[0][0]]
+            elem = mesh.elements[face.element_faces[0][0]]
             face_index = face.element_faces[0][1]
             if face_index == 0:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array([XiQ[:, 0],
                               XiQ[:, 1],
                               XiQ0]).T)
             elif face_index == 1:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array([XiQ[:, 0],
                               XiQ[:, 1],
                               XiQ1]).T)
             elif face_index == 2:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array(
                         [XiQ[:, 0], XiQ0,
                          XiQ[:, 1]]).T)
             elif face_index == 3:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array(
                         [XiQ[:, 0], XiQ1,
                          XiQ[:, 1]]).T)
             elif face_index == 4:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array(
                         [XiQ0, XiQ[:, 0],
                          XiQ[:, 1]]).T)
             elif face_index == 5:
-                X[np:np + NPQ, :] = self._core.evaluate(
+                X[npp:npp + NPQ, :] = mesh._core.evaluate(
                     elem.cid,
                     np.array(
                         [XiQ1, XiQ[:, 0],
                          XiQ[:, 1]]).T)
 
-            T[nt:nt + NTQ, :] = TQ + np
+            T[nt:nt + NTQ, :] = TQ + npp
             if include_xi:
-                Xi[np:np + NPQ, :] = XiQ
-            np += NPQ
+                Xi[npp:npp + NPQ, :] = XiQ
+                Xe[npp:npp + NPQ] = elem.id
+                Xi3D[npp:npp + NPQ, face_metadata['face_xi_idxs'][face_index]] = XiQ
+                Xi3D[npp:npp + NPQ, face_metadata['face_normal_xi_idx'][face_index]] = face_metadata['face_normal_xi_value'][face_index]
+            npp += NPQ
             nt += NTQ
     if include_xi:
-        return X, T, Xi
+        return X, T, Xi, Xe, Xi3D
     return X, T
 
 
@@ -333,15 +302,15 @@ def xi_grid(shape='quad', res=[8, 8], units='div', method='fit'):
         xi2 = xi2.reshape([xi2.size])
         XiQ = np.array([xi1, xi2]).T
         TQ = np.zeros((NTQ, 3), dtype='uint32')
-        np = 0
+        npp = 0
         for row in range(divs[0]):
             for col in range(divs[0]):
                 NPPR = row * nx
-                TQ[np, :] = [NPPR + col, NPPR + col + 1, NPPR + col + nx]
-                np += 1
-                TQ[np, :] = [NPPR + col + 1, NPPR + col + nx + 1,
+                TQ[npp, :] = [NPPR + col, NPPR + col + 1, NPPR + col + nx]
+                npp += 1
+                TQ[npp, :] = [NPPR + col + 1, NPPR + col + nx + 1,
                              NPPR + col + nx]
-                np += 1
+                npp += 1
 
         return XiQ, TQ
 
@@ -352,63 +321,52 @@ def xi_grid(shape='quad', res=[8, 8], units='div', method='fit'):
         XiT = np.zeros([NPT, 2])
         TT = np.zeros((NTT, 3), dtype='uint32')
         NodesPerLine = range(divs[0], 0, -1)
-        np = 0
+        npp = 0
         for row in range(nx):
             for col in range(nx - row):
-                XiT[np, 0] = xi[col]
-                XiT[np, 1] = xi[row]
-                np += 1
+                XiT[npp, 0] = xi[col]
+                XiT[npp, 1] = xi[row]
+                npp += 1
 
-        np = 0
+        npp = 0
         ns = 0
         for row in range(divs[0]):
             for col in range(divs[0] - row):
-                TT[np, :] = [ns, ns + 1, ns + nx - row]
-                np += 1
+                TT[npp, :] = [ns, ns + 1, ns + nx - row]
+                npp += 1
                 if col != divs[0] - row - 1:
-                    TT[np, :] = [ns + 1, ns + nx - row + 1, ns + nx - row]
-                    np += 1
+                    TT[npp, :] = [ns + 1, ns + nx - row + 1, ns + nx - row]
+                    npp += 1
                 ns += 1
             ns += 1
 
         return XiT, TT
 
 
-
 if __name__ == '__main__':
-
-    #DOC-START imports
     # Intialise OpenCMISS-Iron.
     from opencmiss.iron import iron
-    #DOC-END imports
 
-    #DOC-START coordinate system
     # Create coordinate system.
     coordinate_system_user_number = 1
     coordinate_system = iron.CoordinateSystem()
     coordinate_system.CreateStart(coordinate_system_user_number)
     coordinate_system.DimensionSet(3)
     coordinate_system.CreateFinish()
-    #DOC-END coordinate system
 
-    #DOC-START region
     # Create region.
     region_user_number = 1
     region = iron.Region()
     region.CreateStart(region_user_number, iron.WorldRegion)
     region.CoordinateSystemSet(coordinate_system)
     region.CreateFinish()
-    #DOC-END region
 
-    #DOC-START basis
     # Create basis functions.
     basis_user_number = 1
     basis = iron.Basis()
     basis.CreateStart(basis_user_number)
     basis.CreateFinish()
-    #DOC-END basis
 
-    #DOC-START mesh parameters
     # Define mesh parameters.
     number_global_x_elements = 1
     number_global_y_elements = 1
@@ -416,9 +374,7 @@ if __name__ == '__main__':
     height = 1.0
     width = 1.0
     length = 1.0
-    #DOC-END mesh parameters
 
-    #DOC-START generated mesh
     # Create mesh.
     generated_mesh_user_number = 1
     generated_mesh = iron.GeneratedMesh()
@@ -433,38 +389,31 @@ if __name__ == '__main__':
     mesh = iron.Mesh()
     mesh_user_number = 1
     generated_mesh.CreateFinish(mesh_user_number, mesh)
-    #DOC-END generated mesh
 
-    #DOC-START decomposition
     # Perform mesh decomposition.
     decomposition_user_number = 1
     decomposition = iron.Decomposition()
     decomposition.CreateStart(decomposition_user_number, mesh)
     decomposition.CreateFinish()
-    #DOC-END decomposition
 
-    #DOC-START geometric field
     # Create geometric field.
     geometric_field_user_number = 1
     geometric_field = iron.Field()
     geometric_field.CreateStart(geometric_field_user_number, region)
     geometric_field.MeshDecompositionSet(decomposition)
     geometric_field.CreateFinish()
-    #DOC-END geometric field
 
-    #DOC-START update geometric parameters
     # Set geometric field values from the generated mesh.
     generated_mesh.GeometricParametersCalculate(geometric_field)
-    #DOC-END update geometric parameters
 
-    fields = iron.Fields()
-    fields.CreateRegion(region)
-    fields.NodesExport("laplace_equation", "FORTRAN")
-    fields.ElementsExport("laplace_equation", "FORTRAN")
-    fields.Finalise()
+    import sys
 
-    # DOC-START equation set
-    # Create standard Laplace equations set.
+    sys.path.insert(1, '../../tools/')
+    import threejs_visualiser
+
+    threejs_visualiser.visualise(
+        mesh, geometric_field, variable=iron.FieldVariableTypes.U)
+
     equations_set_user_number = 1
     equations_set_field_user_number = 2
     equations_set_field = iron.Field()
@@ -487,7 +436,6 @@ if __name__ == '__main__':
     equations_set.DependentCreateStart(
         dependent_field_user_number, dependent_field)
     equations_set.DependentCreateFinish()
-    # DOC-END dependent field
 
     # DOC-START initialise dependent field
     # Initialise dependent field.
@@ -565,7 +513,6 @@ if __name__ == '__main__':
     problem.Solve()
     # DOC-END solve
 
-    import sys
-    sys.path.insert(1, '../../tools/')
-    import threejs_visualiser
-    threejs_visualiser.visualise(mesh, geometric_field, dependent_field)
+    threejs_visualiser.visualise(
+        mesh, geometric_field, dependent_field=dependent_field,
+        variable=iron.FieldVariableTypes.U, component=1, perspective=True)
