@@ -1,5 +1,7 @@
 # Running with JupyterLab
 
+The following instructions describe how to run JupyterLab with OpenCMISS-Iron using Docker. 
+
 ## Starting the Docker container
 ### Linux and Mac
 ```bash
@@ -40,4 +42,11 @@ A JupyterLab interactive session can be started in the browser of your host mach
 ![Docker JupyterLab server url](./docker_jupyter_server_url.png) 
 
 However, note that the above url will give a ```This site can’t be reached 127.0.0.1 refused to connect``` error. This is because the ```docker run``` command above maps port number 8888 within the container to port number 10000 on the host windows machine. Replace 8888 with 10000 in the url and the JupyterLab interactive session will load as expected in your web browser.
+
+## Working with JupyterLab
+
+The following resources can help you with learning the features of JupyterLab:
+- [Main website](https://jupyter.org/)
+- [Documentation](https://jupyterlab.readthedocs.io/en/stable/)
+- [Tips and tricks](https://towardsdatascience.com/jupyter-notebooks-tips-and-tricks-4e995e7b1fd0)
 
