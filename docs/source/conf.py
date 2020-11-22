@@ -63,6 +63,12 @@ source_suffix = {
     '.md': 'markdown',
 }
 
+html_context = {
+    'css_files': [
+        '_static/theme_overrides.css',  # override wide tables in RTD theme
+        ],
+     }
+
 html_extra_path = ['_static/jupyter-threejs.js']
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
 def setup(app):
