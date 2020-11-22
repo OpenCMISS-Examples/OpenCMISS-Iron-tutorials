@@ -17,6 +17,7 @@ Documentation for the OpenCMISS-Iron software library.
    :caption: Contents:
 
    introduction
+   theory
    architecture
    getting_started
    tutorials
