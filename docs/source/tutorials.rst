@@ -31,17 +31,17 @@ How to run tutorials
 
   See the *Installation* Section of the *Getting Started* Section for more information regarding the directories that are mounted with the Docker Containers.
 
-4. Download the :download:`threejs_visualiser.py <../../tools/threejs_visualiser.py>` python script that will be used for embedding visualisations in the tutorial notebooks, and move it into your ``opt`` folder.
+4. *If you are not using OpenCMISS-Iron Dockers*:
 
-  .. Note::
+  1. Download the :download:`threejs_visualiser.py <../../tools/threejs_visualiser.py>` python script that will be used for embedding visualisations.
 
-    If you are using the OpenCMISS-Iron Dockers, the ``opt`` folder has already been added to the ``PYTHONPATH`` environmental variable in the ``opt/bashrc`` file. This file is executed each time your run the OpenCMISS-Iron Docker container, and tells the python interpreters to look in the ``opt`` folder when you import python modules/functions. If you are not using an OpenCMISS-Iron Docker (e.g. you have built OpenCMISS-Iron from source), then you will need to set your ``PYTHONPATH`` environmental variable to point to the folder containing the ``threejs_visualiser.py`` python script. Alternatively, you can specify the location of the script directly in the Jupyter notebook of a given tutorial by adding the following lines at the top of the notebook:
+  2. Specify the folder containing this script directly in the Jupyter notebook of a given tutorial by adding the following lines at the top of the notebook:
+
   .. code-block:: python
 
-   import sys
-   # Specify path to the threejs_visualiser.py.
-   sys.path.insert(1, 'path/to/threejs_visualiser.py')
-
+    import sys
+    # Specify path to the threejs_visualiser.py.
+    sys.path.insert(1, 'path/to/threejs_visualiser.py')
 
 5. Open a given tutorial (located in the `tutorials` folder of the downloaded repository) in your software of choice.
 
