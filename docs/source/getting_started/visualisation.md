@@ -6,7 +6,15 @@ There are a number of approaches for visualising simulation results from OpenCMI
 OpenCMISS-Iron support export of meshes and fields in `.exelem` and `.exnode` files for visualisation in the Cmgui 3D visualisation software package. This isdemonstrated in the *Basics* tutorial. 
 
 ### Installing Cmgui
-This software can be downloaded from the [Physiome Project website](http://physiomeproject.org/software/opencmiss/cmgui/download).
+The latest standalone and installer versions of Cmgui (cmgui-3.0.1.r11315) can be downloaded from the following links:
+- [x86_64-Ubuntu-12.04.5-LTS.deb](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-x86_64-Ubuntu-12.04.5-LTS.deb)
+- [x86_64-Ubuntu-12.04.5-LTS.tar.gz](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-x86_64-Ubuntu-12.04.5-LTS.tar.gz)
+- [i386-Mac-OS-X-10.6.8.dmg](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-i386-Mac-OS-X-10.6.8.dmg)
+- [i386-Mac-OS-X-10.6.8.tar.gz](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-i386-Mac-OS-X-10.6.8.tar.gz)
+- [amd64-Windows.exe](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-amd64-Windows.exe)
+- [amd64-Windows.zip](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/releases/download/cmgui/cmgui-3.0.1.r11315-amd64-Windows.zip)
+
+Previous versions can be found on the [*Physiome Software* website](http://physiomeproject.org/software/opencmiss/cmgui/download/developer). An extensive list of all previous versions can be found on the following [Auckland Bioengineering Institute ftp link (only accessible within the Unviersity of Auckland)](ftp://ftp.bioeng.auckland.ac.nz/cmiss/zinclibrary/latest/).
 
 ### Cmgui documentation
  
