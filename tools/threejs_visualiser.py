@@ -131,17 +131,21 @@ def visualise(
     orbit = pjs.OrbitControls(
         controlling=camera, screenSpacePanning=True, target=centroid.tolist())
     camera.lookAt(centroid.tolist())
-    scene = pjs.Scene(children=[surf1, surf2] + lights)
+    scene = pjs.Scene()
     axes = pjs.AxesHelper(size=range_positions[0] * 2)
     scene.add(axes)
+    scene.add(surf1)
+    scene.add(surf2)
+    scene.add(lights)
     renderer = pjs.Renderer(
         scene=scene, camera=camera, controls=[orbit],
         width=view_width, height=view_height)
     camera.zoom = 40
 
-    embed.embed_minimal_html('export.html', views=renderer, title='Renderer')
-    display(renderer)
+    return renderer
 
+def export_html(renderer):
+    embed.embed_minimal_html('export.html', views=renderer, title='Renderer')
 
 def get_faces(
         mesh, res=8, exterior_only=True, include_xi=False, elements=None):
