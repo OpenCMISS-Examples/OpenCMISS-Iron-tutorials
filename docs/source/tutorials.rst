@@ -7,7 +7,7 @@ This section provide tutorials that explain how to use OpenCMISS.
 .. toctree::
   :maxdepth: 1
 
-  tutorials/basics
-  tutorials/mesh_io
+  basics
+  mesh_io
 ..  tutorials/finite_elasticity
 

@@ -63,6 +63,7 @@ source_suffix = {
     '.md': 'markdown',
 }
 
+html_extra_path = ['_static/jupyter-threejs.js']
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
 def setup(app):
     app.add_config_value('recommonmark_config', {
