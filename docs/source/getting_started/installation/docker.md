@@ -131,17 +131,18 @@ This command will generate output similar to the figure shown below:
 ```
 ![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
 
-3. Install any modules you wish to use with OpenCMISS-Iron. As an example, we will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats. 
+3. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats. 
     ``` bash
     /opt/conda/bin/pip install --user 'meshio==4.3.5'
     ```
     ``` Important:: Once new packages are installed, to use them, the JupyterLab kernel needs to be restarted. This can be achieved by selecting the Kernel menu on JupyterLab and selecting 'Restart Kernel'.
     ```
-4. **Optional** Clone any additional python modules that you may wish to use e.g.
+4. **For running tutorials** Clone python modules used by the OpenCMISS tutorials:
     ``` bash
     cd ~/work
     git clone https://github.com/PrasadBabarendaGamage/mesh-tools.git
     git clone https://github.com/PrasadBabarendaGamage/morphic.git
+    git clone https://github.com/PrasadBabarendaGamage/utilities.git   
     ```
     ``` Note:: When using a PowerShell, copy these commands one line at a time.
     ```   
@@ -149,11 +150,16 @@ This command will generate output similar to the figure shown below:
     ``` bash
     exit
     ```
-6. **Optional** Specify the location of any custom python modules that you cloned in Step 4. This is typically achieved by updating your bashrc file. For more information on bashrc files, see the following external [link](https://support.nesi.org.nz/hc/en-gb/articles/360001194536-What-are-my-bashrc-bash-profile-for-). 
+6. **For running tutorials** Specify the location of the python modules that you cloned in Step 4. This is typically achieved by updating your bashrc file. For more information on bashrc files, see the following external [link](https://support.nesi.org.nz/hc/en-gb/articles/360001194536-What-are-my-bashrc-bash-profile-for-). 
 
     Add the following to your `~/oc/opt/bashrc` file (this can be achieved using a text editor on your host machine. Note that on Windows, it is recommended to use a text editor that is compatible with linux files such as [Notepad++](https://notepad-plus-plus.org/downloads/))
    ```bash
    export PYTHONPATH=/home/jovyan/work/mesh-tools:$PYTHONPATH
    export PYTHONPATH=/home/jovyan/work/morphic:$PYTHONPATH
+   export PYTHONPATH=/home/jovyan/work/utilities:$PYTHONPATH
+   
+   export JUPYTER_PATH=/home/jovyan/work/mesh-tools:JUPYTER_PATH
+   export JUPYTER_PATH=/home/jovyan/work/morphic:JUPYTER_PATH
+   export JUPYTER_PATH=/home/jovyan/work/utilities:JUPYTER_PATH      
    ```
    
