@@ -6,9 +6,19 @@ import matplotlib.cm as cm
 import matplotlib
 import mesh_tools
 
+from pythreejs.materials.SpriteMaterial_autogen import SpriteMaterial
+from pythreejs.textures.TextTexture_autogen import TextTexture
+from pythreejs.objects.Sprite_autogen import Sprite
+
 def visualise(
         mesh, geometric_field, dependent_field=None, variable=None,
-        component=None, cmap='gist_rainbow', resolution=1, perspective=False):
+        mechanics_animation=False,
+        colour_map_dependent_component_number=None,
+        cmap='gist_rainbow', resolution=1, perspective=False, node_labels=False):
+
+    view_width = 600
+    view_height = 600
+
     debug = False
     if debug:
         vertices = [
@@ -46,10 +56,6 @@ def visualise(
         num_elements, element_nums = mesh_tools.num_element_get(
             mesh, mesh_component=1)
 
-        node_positions = mesh_tools.get_field_values(
-            geometric_field, node_nums, derivative=1, dimension=3,
-            variable=variable)
-
         # Convert geometric field to a morphic mesh and export to json
         mesh = mesh_tools.OpenCMISS_to_morphic(
             mesh, geometric_field, element_nums, node_nums, dimension=3,
@@ -65,12 +71,13 @@ def visualise(
     min_positions = np.min(vertices, axis=0)
     range_positions = max_positions - min_positions
 
-    if dependent_field is not None:
+    if (dependent_field is not None) and (colour_map_dependent_component_number is not None):
+
         solution = np.zeros(xis.shape[0])
         for idx, (xi, xi_element_num) in enumerate(zip(xis, xi_element_nums)):
             solution[idx] = mesh_tools.interpolate_opencmiss_field_xi(
                 dependent_field, xi, element_ids=[xi_element_num], dimension=3,
-                deriv=1)[component-1]
+                deriv=1)[colour_map_dependent_component_number-1]
 
         minima = min(solution)
         maxima = max(solution)
@@ -83,7 +90,8 @@ def visualise(
         vertex_colors = np.zeros((len(vertices), 3), dtype='float32')
         for idx, v in enumerate(solution):
             vertex_colors[idx, :] = mapper.to_rgba(v, alpha=None)[:3]
-
+        # else:
+        #     raise ValueError('Visualisation not supported.')
     else:
         vertex_colors = np.tile(
             np.array([0.5, 0.5, 0.5], dtype='float32'),
@@ -96,53 +104,151 @@ def visualise(
             normalized=False),
         color=pjs.BufferAttribute(vertex_colors),
     ))
-    geometry.exec_three_obj_method('computeFaceNormals')
 
-    surf1 = pjs.Mesh(geometry=geometry,
-                 material=pjs.MeshLambertMaterial(
-                     vertexColors='VertexColors',
-                     side='FrontSide'))  # Center the cube.
-    surf2 = pjs.Mesh(geometry=geometry,
-                 material=pjs.MeshLambertMaterial(
-                     vertexColors='VertexColors',
-                     side='BackSide'))  # Center the cube.
-    surf = pjs.Group(children=[surf1, surf2])
+    if mechanics_animation:
+        deformed_vertices = np.zeros((xis.shape[0], 3), dtype='float32')
+        for idx, (xi, xi_element_num) in enumerate(
+                zip(xis, xi_element_nums)):
+            deformed_vertices[idx, :] = \
+            mesh_tools.interpolate_opencmiss_field_xi(
+                dependent_field, xi, element_ids=[xi_element_num],
+                dimension=3,
+                deriv=1)[0][:3]
+        geometry.morphAttributes = {'position': [
+            pjs.BufferAttribute(deformed_vertices),
+        ]}
 
-    view_width = 600
-    view_height = 400
-    camera = pjs.CombinedCamera(
-        fov=20, position=[range_positions[0] * 125,
-                          range_positions[1] * 125,
-                          range_positions[2] * 125],
-        width=view_width,
-        height=view_height, near=1,
-        far=max(range_positions) * 1000)
-    if perspective:
-        camera.mode = 'perspective'
+        geometry.exec_three_obj_method('computeFaceNormals')
+        geometry.exec_three_obj_method('computeVertexNormals')
+
+        surf1 = pjs.Mesh(
+            geometry,
+            pjs.MeshPhongMaterial(
+                color='#ff3333',
+                shininess=150,
+                morphTargets=True,
+                side='FrontSide'), name='A')
+        surf2 = pjs.Mesh(
+            geometry,
+            pjs.MeshPhongMaterial(
+                color='#ff3333',
+                shininess=150,
+                morphTargets=True,
+                side='BackSide'), name='B')
+        surf = pjs.Group(children=[surf1, surf2])
+
+        # camera = pjs.PerspectiveCamera(
+        #     fov=20, position=[range_positions[0] * 10,
+        #                       range_positions[1] * 10,
+        #                       range_positions[2] * 10],
+        #     width=view_width,
+        #     height=view_height, near=1,
+        #     far=max(range_positions) * 10)
+
+        camera = pjs.PerspectiveCamera(
+            position=[range_positions[0] * 3,
+                      range_positions[1] * 3,
+                      range_positions[2] * 3],
+            aspect=view_width / view_height)
+
+        scene3 = pjs.Scene(children=[surf1, surf2, camera,
+                                     pjs.DirectionalLight(position=[3, 5, 1],
+                                                          intensity=0.6),
+                                     pjs.AmbientLight(intensity=0.5)])
+        axes = pjs.AxesHelper(size=range_positions[0] * 2)
+        scene3.add(axes)
+
+        A_track = pjs.NumberKeyframeTrack(
+            name='scene/A.morphTargetInfluences[0]', times=[0, 3],
+            values=[0, 1])
+        B_track = pjs.NumberKeyframeTrack(
+            name='scene/B.morphTargetInfluences[0]', times=[0, 3],
+            values=[0, 1])
+        pill_clip = pjs.AnimationClip(tracks=[A_track, B_track])
+        pill_action = pjs.AnimationAction(
+            pjs.AnimationMixer(scene3), pill_clip, scene3)
+
+        renderer3 = pjs.Renderer(
+            camera=camera, scene=scene3,
+            controls=[pjs.OrbitControls(controlling=camera)],
+            width=view_width, height=view_height)
+
+
+        display(renderer3, pill_action)
+
     else:
-        camera.mode = 'orthographic'
-    lights = [
-        pjs.DirectionalLight(
-            position=[range_positions[0] * 125,
-                          range_positions[1] * 125,
-                          range_positions[2] * 125], intensity=1),
-        pjs.AmbientLight(intensity=1),
-    ]
-    orbit = pjs.OrbitControls(
-        controlling=camera, screenSpacePanning=True, target=centroid.tolist())
-    camera.lookAt(centroid.tolist())
-    scene = pjs.Scene()
-    axes = pjs.AxesHelper(size=range_positions[0] * 2)
-    scene.add(axes)
-    scene.add(surf1)
-    scene.add(surf2)
-    scene.add(lights)
-    renderer = pjs.Renderer(
-        scene=scene, camera=camera, controls=[orbit],
-        width=view_width, height=view_height)
-    camera.zoom = 40
+        geometry.exec_three_obj_method('computeFaceNormals')
+        geometry.exec_three_obj_method('computeVertexNormals')
 
-    return renderer
+        surf1 = pjs.Mesh(geometry=geometry,
+                     material=pjs.MeshLambertMaterial(
+                         vertexColors='VertexColors',
+                         side='FrontSide'))  # Center the cube.
+        surf2 = pjs.Mesh(geometry=geometry,
+                     material=pjs.MeshLambertMaterial(
+                         vertexColors='VertexColors',
+                         side='BackSide'))  # Center the cube.
+        surf = pjs.Group(children=[surf1, surf2])
+
+        camera = pjs.PerspectiveCamera(position=[range_positions[0] * 3,
+                              range_positions[1] * 3,
+                              range_positions[2] * 3],
+                                        aspect=view_width / view_height)
+
+        camera.lookAt(centroid.tolist())
+
+        # if perspective:
+        #     camera.mode = 'perspective'
+        # else:
+        #     camera.mode = 'orthographic'
+
+        lights = [
+            pjs.DirectionalLight(
+                position=[range_positions[0] * 16,
+                          range_positions[1] * 12,
+                          range_positions[2] * 17], intensity=0.5),
+            pjs.AmbientLight(intensity=0.8),
+        ]
+        orbit = pjs.OrbitControls(
+            controlling=camera, screenSpacePanning=True, target=centroid.tolist())
+
+        scene = pjs.Scene()
+        axes = pjs.AxesHelper(size=max(range_positions) * 2)
+        scene.add(axes)
+        scene.add(surf1)
+        scene.add(surf2)
+        scene.add(lights)
+
+        if node_labels:
+            # Add text labels for each mesh node.
+            v, ids = mesh.get_node_ids(group='_default')
+            for idx, v in enumerate(v):
+                text = make_text(str(ids[idx]), position=(v[0], v[1], v[2]))
+                scene.add(text)
+
+        # Add text for axes labels.
+        x_axis_label = make_text(
+            'x', position=(max(range_positions) * 2, 0, 0))
+        y_axis_label = make_text(
+            'y', position=(0, max(range_positions) * 2, 0))
+        z_axis_label = make_text(
+            'z', position=(0, 0, max(range_positions) * 2))
+        scene.add(x_axis_label)
+        scene.add(y_axis_label)
+        scene.add(z_axis_label)
+
+        renderer = pjs.Renderer(
+            scene=scene, camera=camera, controls=[orbit],
+            width=view_width, height=view_height)
+        camera.zoom = 1
+        return renderer
+
+def make_text(text, position=(0, 0, 0), colour='white', size=0.05):
+    """
+    Return a text object at the specified location with a given height
+    """
+    sm = SpriteMaterial(map=TextTexture(string=text, color=colour, size=100, squareTexture=False))
+    return Sprite(material=sm, position=position, scaleToTexture=True, scale=[size, size*1.5, size])
 
 def export_html(renderer):
     embed.embed_minimal_html('export.html', views=renderer, title='Renderer')
@@ -519,4 +625,7 @@ if __name__ == '__main__':
 
     threejs_visualiser.visualise(
         mesh, geometric_field, dependent_field=dependent_field,
-        variable=iron.FieldVariableTypes.U, component=1, perspective=True)
+        variable=iron.FieldVariableTypes.U, component=1, perspective=True,
+        animate=True)
+
+
