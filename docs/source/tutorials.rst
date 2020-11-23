@@ -9,7 +9,7 @@ Tutorials that show how to use different features OpenCMISS-Iron are listed belo
 
   basics
   mesh_io
-..  tutorials/finite_elasticity
+  finite_elasticity
 
 How to run tutorials
 --------------------
