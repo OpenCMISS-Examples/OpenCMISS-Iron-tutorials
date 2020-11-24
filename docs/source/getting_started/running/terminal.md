@@ -59,7 +59,7 @@ Start the OpenCMISS-Iron Docker container by executing the following command (en
     ```      
 
 #### Windows
-1. Open a new PowerShell on your host machine.
+1. Open a new PowerShell on your host machine (don't use a standard terminal, as it does not support commands that span multiple lines).
 2. Run the following:       
     ```bash
     docker run `

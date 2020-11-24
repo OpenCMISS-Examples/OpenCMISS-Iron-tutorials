@@ -22,6 +22,8 @@ docker run \
 ```
 
 ### Windows
+Run the following command in a PowerShell (don't use a standard terminal, as it does not support commands that span multiple lines).
+
 ```bash
 docker run `
     --rm `
