@@ -24,6 +24,10 @@ docker run \
     -v ~/oc/usr/bin/:/usr/local/bin \
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-vs-code.sh
 ```
+
+``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+```
+
 #### Mac
 1. Follow the instructions in the FAQ Docker 'Setup XQuartz X11 server on Mac' Section.
 
@@ -43,3 +47,7 @@ docker run \
          -v ~/oc/usr/etc/jupyter:/etc/jupyter \
          -v ~/oc/usr/bin/:/usr/local/bin \
          prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-vs-code.sh
+    ```
+   
+    ``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+    ```

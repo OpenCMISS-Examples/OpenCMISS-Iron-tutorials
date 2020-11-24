@@ -20,8 +20,12 @@ Start the OpenCMISS-Iron Docker container by executing the following command (en
         -v ~/oc/usr/bin/:/usr/local/bin \
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
+   
+    ``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+    ```
+      
     ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon'.
-    ```      
+    ```
 
 #### Mac
 1. Open a new terminal on your host machine.
@@ -47,6 +51,10 @@ Start the OpenCMISS-Iron Docker container by executing the following command (en
         -v ~/oc/usr/bin/:/usr/local/bin \
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
+   
+    ``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+    ```
+      
     ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon'.
     ```      
 
@@ -65,8 +73,13 @@ Start the OpenCMISS-Iron Docker container by executing the following command (en
         -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start.sh
     ```
+   
+    ``` Important:: Ensure that there are no trailing spaces following the end-of-line tilda deliminators.
+    ```
+   
     ``` Important:: Repeat the above command if you recieve an error like: 'docker: Error response from daemon'.
-    ```   
+    ```
+
 
 ### Running OpenCMISS-Iron from the Docker container
 The command in the previous section will open a new bash terminal within the running OpenCMISS-Iron Docker container as shown below:

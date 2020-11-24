@@ -18,19 +18,25 @@ docker run \
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh
 ```
 
+``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+```
+
 ### Windows
 ```bash
 docker run `
     --rm `
     --name opencmiss-iron `
     -p 10000:8888 `
-    -e JUPYTER_ENABLE_LAB=yes ` 
+    -e JUPYTER_ENABLE_LAB=yes `
     -v c/Users/${env:UserName}/Documents/oc/opt:/home/jovyan/work `
     -v c/Users/${env:UserName}/Documents/oc/usr/local:/home/jovyan/.local `
     -v c/Users/${env:UserName}/Documents/oc/usr/cache:/home/jovyan/.cache `
     -v c/Users/${env:UserName}/Documents/oc/usr/etc/jupyter:/etc/jupyter `
     -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh
+```
+
+``` Important:: Ensure that there are no trailing spaces following the end-of-line tilda deliminators.
 ```
 
 ## Accessing JupyterLab
