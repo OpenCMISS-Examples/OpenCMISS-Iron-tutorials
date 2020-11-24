@@ -153,7 +153,7 @@ More information on arguments for the `docker run` command can be found in the f
     ```
     ![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
 
-3. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats. 
+3. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats, and the h5py package that provides support for loading and saving files in hdf5 format. 
     ``` bash
     /opt/conda/bin/pip install --user 'meshio==4.3.5' h5py
     ```
