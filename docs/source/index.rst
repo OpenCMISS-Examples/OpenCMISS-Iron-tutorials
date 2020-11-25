@@ -18,10 +18,10 @@ Documentation for the OpenCMISS-Iron software library.
 
    introduction
    theory
-   architecture
    getting_started
    tutorials
    faq
+   api
    developers
    citing
 
