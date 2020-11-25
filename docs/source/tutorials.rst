@@ -2,7 +2,10 @@
 Tutorials
 =========
 
-Tutorials that show how to use different features OpenCMISS-Iron are listed below:
+The following tutorials demonstrate how to the OpenCMISS-Iron library and its manny features.
+
+Prior to running these tutorials, please see the first steps guide below which describes how to obtain a local copy of all these tutorials.
+
 
 .. toctree::
   :maxdepth: 1

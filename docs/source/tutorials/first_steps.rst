@@ -1,5 +1,5 @@
 ==================================
-First steps - How to run tutorials
+First steps - how to run tutorials
 ==================================
 
 The OpenCMISS-Iron tutorials have been created as Jupyter notebooks. Follow the steps below to obtain a local copy of these tutorials that you can run on your own machine.
