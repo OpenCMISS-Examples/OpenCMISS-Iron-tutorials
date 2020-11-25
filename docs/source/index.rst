@@ -23,6 +23,7 @@ Documentation for the OpenCMISS-Iron software library.
    tutorials
    faq
    developers
+   citing
 
 Indices and tables
 ==================
