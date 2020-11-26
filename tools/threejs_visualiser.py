@@ -11,10 +11,22 @@ from pythreejs.textures.TextTexture_autogen import TextTexture
 from pythreejs.objects.Sprite_autogen import Sprite
 
 def visualise(
-        mesh, geometric_field, dependent_field=None, variable=None,
-        mechanics_animation=False,
+        mesh, geometric_field, number_of_dimensions, xi_interpolation,
+        dependent_field=None, variable=None, mechanics_animation=False,
         colour_map_dependent_component_number=None,
-        cmap='gist_rainbow', resolution=1, perspective=False, node_labels=False):
+        cmap='gist_rainbow', resolution=1, node_labels=False):
+
+    if number_of_dimensions != 3:
+        print(
+            'Warning: Only visualisation of 3D meshes is currently supported.')
+        return
+
+    if xi_interpolation != [1, 1, 1]:
+        print(
+            'Warning: Only visualisation of 3D elements with linear Lagrange \
+            interpolation along all coordinate directions is currently \
+            supported.')
+        return
 
     view_width = 600
     view_height = 600
@@ -241,7 +253,7 @@ def visualise(
             scene=scene, camera=camera, controls=[orbit],
             width=view_width, height=view_height)
         camera.zoom = 1
-        return renderer
+        display(renderer)
 
 def make_text(text, position=(0, 0, 0), colour='white', size=0.05):
     """
