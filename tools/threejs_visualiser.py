@@ -162,6 +162,8 @@ def visualise(
                       range_positions[1] * 3,
                       range_positions[2] * 3],
             aspect=view_width / view_height)
+        camera.up = [0, 0, 1]
+        camera.lookAt(centroid.tolist())
 
         scene3 = pjs.Scene(children=[surf1, surf2, camera,
                                      pjs.DirectionalLight(position=[3, 5, 1],
@@ -207,6 +209,7 @@ def visualise(
                               range_positions[2] * 3],
                                         aspect=view_width / view_height)
 
+        camera.up = [0, 0, 1]
         camera.lookAt(centroid.tolist())
 
         # if perspective:
