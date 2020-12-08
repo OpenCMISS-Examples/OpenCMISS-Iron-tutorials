@@ -1,9 +1,10 @@
 # Running with JupyterLab
 
-The following instructions describe how to run JupyterLab with OpenCMISS-Iron using Docker. 
+The following instructions describe how to run JupyterLab with OpenCMISS-Iron using Docker or Singularity. 
 
-## Starting the Docker container
+## Starting the Docker/Singularity container
 ### Linux and Mac
+#### Docker
 ```bash
 docker run \
     --rm \
@@ -16,6 +17,20 @@ docker run \
     -v ~/oc/usr/etc/jupyter:/etc/jupyter \
     -v ~/oc/usr/bin/:/usr/local/bin \
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh
+```
+
+``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
+```
+
+#### Singularity
+```bash
+SINGULARITY_JUPYTER_ENABLE_LAB=yes singularity run \
+    -B ~/oc/opt:/home/jovyan/work \
+    -B ~/oc/usr/local:/home/jovyan/.local \
+    -B ~/oc/usr/cache:/home/jovyan/.cache \
+    -B ~/oc/usr/etc/jupyter:/etc/jupyter \
+    -B ~/oc/usr/bin/:/usr/local/bin \
+    docker://prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh
 ```
 
 ``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
@@ -49,7 +64,10 @@ A JupyterLab interactive session can be started in the browser of your host mach
 
 ![Docker JupyterLab server url](./docker_jupyter_server_url.png) 
 
+### Additional step for Docker containers
 However, note that the above url will give a ```This site can’t be reached 127.0.0.1 refused to connect``` error. This is because the ```docker run``` command above maps port number 8888 within the container to port number 10000 on the host windows machine. Replace 8888 with 10000 in the url and the JupyterLab interactive session will load as expected in your web browser.
+
+Singularity does not require mapping of ports.
 
 ## Working with JupyterLab
 
