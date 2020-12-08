@@ -104,15 +104,15 @@ More information on arguments for the `docker run` command can be found in the f
 ### Linux and Mac
 
 1. Open a new terminal.
-1. Check that you are using the bash shell:
+2. Check that you are using the bash shell:
     ```bash
     echo $SHELL
     ```
-2. If the command above does not print `/bin/bash` then start a bash shell:
+3. If the command above does not print `/bin/bash` then start a bash shell:
     ```bash
     bash
     ```
-3. Run the following command (ensure that there are no trailing spaces following the end-of-line backslashes deliminators):
+4. Run the following command (ensure that there are no trailing spaces following the end-of-line backslashes deliminators):
     ```bash
     docker run \
         --rm \
@@ -153,14 +153,17 @@ More information on arguments for the `docker run` command can be found in the f
     ```
     ![Docker Windows share-it permissions](./docker_windows_share_it_permissions.png) 
 
-3. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats, and the h5py package that provides support for loading and saving files in hdf5 format. 
+## Post-install setup
+
+1. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats, and the h5py package that provides support for loading and saving files in hdf5 format. 
     ``` bash
     /opt/conda/bin/pip install --user 'meshio==4.3.5' h5py
     ```
     ``` Important:: Once new packages are installed, to use them, the JupyterLab kernel needs to be restarted. This can be achieved by selecting the Kernel menu on JupyterLab and selecting 'Restart Kernel'.
     ```
-4. **For running tutorials** Clone python modules used by the OpenCMISS tutorials:
+2. **For running tutorials** Clone python modules used by the OpenCMISS tutorials:
     ``` bash
+    mkdir ~/work
     cd ~/work
     git clone https://github.com/PrasadBabarendaGamage/mesh-tools.git
     git clone https://github.com/PrasadBabarendaGamage/morphic.git
@@ -168,11 +171,11 @@ More information on arguments for the `docker run` command can be found in the f
     ```
     ``` Note:: When using a PowerShell, copy these commands one line at a time.
     ```   
-5. Turn off the Docker container.
+3. Shutdown the Docker container.
     ``` bash
     exit
     ```
-6. **For running tutorials** Specify the location of the python modules that you cloned in Step 4. This is typically achieved by updating your bashrc file. For more information on bashrc files, see the following external [link](https://support.nesi.org.nz/hc/en-gb/articles/360001194536-What-are-my-bashrc-bash-profile-for-). 
+4. **For running tutorials** Specify the location of the python modules that you cloned in Step 2. This is typically achieved by updating your bashrc file. For more information on bashrc files, see the following external [link](https://support.nesi.org.nz/hc/en-gb/articles/360001194536-What-are-my-bashrc-bash-profile-for-). 
 
     Add the following to your `~/oc/opt/bashrc` file (this can be achieved using a text editor on your host operating system).
 
@@ -180,12 +183,13 @@ More information on arguments for the `docker run` command can be found in the f
     ```   
 
    ```bash
+   export PATH=/opt/conda/bin/:$PATH
    export PYTHONPATH=/home/jovyan/work/mesh-tools:$PYTHONPATH
    export PYTHONPATH=/home/jovyan/work/morphic:$PYTHONPATH
    export PYTHONPATH=/home/jovyan/work/utilities:$PYTHONPATH
    
-   export JUPYTER_PATH=/home/jovyan/work/mesh-tools:JUPYTER_PATH
-   export JUPYTER_PATH=/home/jovyan/work/morphic:JUPYTER_PATH
-   export JUPYTER_PATH=/home/jovyan/work/utilities:JUPYTER_PATH      
+   export JUPYTER_PATH=/home/jovyan/work/mesh-tools:$JUPYTER_PATH
+   export JUPYTER_PATH=/home/jovyan/work/morphic:$JUPYTER_PATH
+   export JUPYTER_PATH=/home/jovyan/work/utilities:$JUPYTER_PATH      
    ```
    
