@@ -22,6 +22,7 @@ Documentation for the OpenCMISS-Iron software library.
    tutorials
    faq
    api
+   contributing
    developers
    citing
 
