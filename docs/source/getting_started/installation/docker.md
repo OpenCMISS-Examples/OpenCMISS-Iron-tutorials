@@ -63,6 +63,12 @@ This folder structure associated files have been stored in the following zip fil
 ### Linux and Mac
 Go to your home directory and extract the zip file. For example, on linux `~` refers to `/home/$USER/`. Once extracted, the `oc` folder should be found in `/home/$USER/oc`.
 
+```bash
+cd ~
+wget https://opencmiss-iron-tutorials.readthedocs.io/en/latest/_static/oc.zip
+unzip oc.zip
+```
+
 ### Windows
 Move the downloaded zip file to your `my documents` folder (this is typically located in `C:/Users/USER_NAME/Documents/`, where USER_NAME is your Windows login name). Extract the zip file into this folder. Once extracted, the `oc` folder should be found in `C:/Users/USER_NAME/Documents/oc`.
 
