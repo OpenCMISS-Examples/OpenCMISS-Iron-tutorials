@@ -161,9 +161,9 @@ More information on arguments for the `docker run` command can be found in the f
 
 ## Post-install setup
 
-1. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats, and the h5py package that provides support for loading and saving files in hdf5 format. 
+1. Install any modules you wish to use with OpenCMISS-Iron. We will install the python `meshio` package that is used in the OpenCMISS-Iron tutorials for exporting meshes to different formats, the `scipy` python package, and the `h5py` package that provides support for loading and saving files in hdf5 format. 
     ``` bash
-    /opt/conda/bin/pip install --user 'meshio==4.3.5' h5py
+    /opt/conda/bin/pip install --user 'meshio==4.3.5' h5py scipy
     ```
     ``` Important:: Once new packages are installed, to use them, the JupyterLab kernel needs to be restarted. This can be achieved by selecting the Kernel menu on JupyterLab and selecting 'Restart Kernel'.
     ```
