@@ -14,4 +14,5 @@ Docker related FAQs
   faq/docker/installing_python_libraries
   faq/docker/ssh_tunnelling
   faq/docker/setup_xquartz_x11_server_mac
+  faq/docker/setup_vcxsrv_x11_server_windows
   faq/docker/troubleshooting

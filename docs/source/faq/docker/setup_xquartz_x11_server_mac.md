@@ -1,6 +1,6 @@
 # Setup XQuartz X11 server on Mac
 
-The XQuartz X11 server will be used to allow us visualise GUI programs, which are running inside the Docker container, on the host Mac machine. The following guide has been adapted from [this](https://sourabhbajaj.com/blog/2017/02/07/gui-applications-docker-mac/) document.
+The XQuartz X11 server will be used to allow us visualise GUI programs, which are running inside the Docker container, on the host Mac machine. The following guide has been adapted from [this](https://sourabhbajaj.com/blog/2017/02/07/gui-applications-docker-mac/) link.
 
 1. Install XQuartz
     1. From the [XQuartz website](https://www.xquartz.org/) 
