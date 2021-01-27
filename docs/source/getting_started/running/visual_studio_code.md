@@ -51,4 +51,4 @@ docker run \
     ``` Important:: Ensure that there are no trailing spaces following the end of line backslash deliminators.
     ```
 #### Windows
-This feature is not supported at this time.
+Running the Visual Studio Code IDE in a docker on a Windows host is not supported at this time. See the following [github issue](https://github.com/OpenCMISS-Examples/OpenCMISS-Iron-tutorials/issues/8) for more information.
