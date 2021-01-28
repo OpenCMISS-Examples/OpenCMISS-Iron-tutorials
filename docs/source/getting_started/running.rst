@@ -14,7 +14,6 @@ Setting up run environment
   running/jupyterlab
   running/pycharm
   running/visual_studio_code
-  running/troubleshooting
 
 Running OpenCMISS-Iron python examples
 

@@ -1,5 +1,6 @@
 # Troubleshooting
 
+## Errors when running the Docker container
 1. The following error may be encountered when trying to execute the "docker run" command:
     ```bash
     Bind for 0.0.0.0:10000 failed: port is already allocated.
@@ -22,3 +23,10 @@
     To avoid this issue, do not open linux scripts with these editors on windows as advised in the OpenCMISS-Iron Docker installations steps. Instead, use a text editor like [Notepad++](https://notepad-plus-plus.org/downloads/). 
     
     To correct this issue, locate the script producing the error (in this case ```bashrc```) and open it in Notepad++ on your Windows host (remember that ```/home/jovyan/work``` inside the container is mapped to your ```oc/opt``` folder).  From the "Edit" menu, select "EOL Conversion" -> "UNIX/OSX Format". You can also set the default EOL in notepad++ via "Settings" -> "Preferences" -> "New Document/Default Directory" then select "Unix/OSX" under the Format box.
+    
+## PyCharm related issues
+3. Pycharm won't let you add the new interpreter
+    1. Close pycharm.
+    2. Delete the `.idea` hidden folder in the folder that the heart-biomechanics 
+    repository was cloned into.
+    3. Retry the setup

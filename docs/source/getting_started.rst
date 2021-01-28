@@ -10,3 +10,4 @@ This section describes how to get started with installing, running OpenCMISS-Iro
   getting_started/installation
   getting_started/running
   getting_started/visualisation
+  getting_started/troubleshooting
