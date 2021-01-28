@@ -1,7 +1,7 @@
 FAQ
 ===
 
-This section describes documents how to enable additional feature for helping with code development and troubleshooting tips.
+This section describes documents how to enable additional features for e.g. helping with code development.
 
 
 Docker related FAQs
