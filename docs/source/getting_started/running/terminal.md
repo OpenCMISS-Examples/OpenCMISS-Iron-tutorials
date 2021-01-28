@@ -65,7 +65,7 @@ Start the OpenCMISS-Iron Docker container by executing the following command (en
     docker run `
         --rm `
         --name opencmiss-iron `
-        -it `   
+        -it `
         -v c/Users/${env:UserName}/Documents/oc/opt:/home/jovyan/work `
         -v c/Users/${env:UserName}/Documents/oc/usr/local:/home/jovyan/.local `
         -v c/Users/${env:UserName}/Documents/oc/usr/cache:/home/jovyan/.cache `
