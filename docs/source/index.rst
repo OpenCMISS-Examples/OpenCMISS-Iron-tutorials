@@ -20,6 +20,7 @@ Documentation for the OpenCMISS-Iron software library.
    theory
    getting_started
    tutorials
+   functional_testing
    faq
    api
    contributing
