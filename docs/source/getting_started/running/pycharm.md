@@ -32,7 +32,6 @@ docker run \
     -v ~/oc/usr/cache:/home/jovyan/.cache \
     -v ~/oc/usr/config:/home/jovyan/.config \
     -v ~/oc/usr/java:/home/jovyan/.java \
-    -v ~/oc/usr/PyCharm:/home/jovyan/.PyCharm \
     -v ~/oc/usr/etc/jupyter:/etc/jupyter \
     -v ~/oc/usr/bin/:/usr/local/bin \
     prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-pycharm.sh
@@ -58,7 +57,6 @@ docker run \
          -v ~/oc/usr/bin/:/usr/local/bin \
          -v ~/oc/usr/config:/home/jovyan/.config \
          -v ~/oc/usr/java:/home/jovyan/.java \
-         -v ~/oc/usr/PyCharm:/home/jovyan/.PyCharm \
          prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-pycharm.sh
     ```
    
@@ -85,7 +83,6 @@ docker run \
         -v c/Users/${env:UserName}/Documents/oc/usr/bin/:/usr/local/bin/ `
         -v c/Users/${env:UserName}/Documents/oc/usr/config:/home/jovyan/.config `
         -v c/Users/${env:UserName}/Documents/oc/usr/java:/home/jovyan/.java `
-        -v c/Users/${env:UserName}/Documents/oc/usr/PyCharm:/home/jovyan/.PyCharm `
         prasadbabarendagamage/opencmiss-iron:1.0-minimal-ssh start-pycharm.sh
     ```
 
