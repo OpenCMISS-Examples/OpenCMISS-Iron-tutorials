@@ -12,8 +12,11 @@ Prior to running these tutorials, please see the first steps guide below which d
 
   tutorials/first_steps
   tutorials/objects
-  basics
-  mesh_io
-  finite_elasticity
+  tutorials/basics
+  tutorials/mesh_io
+  tutorials/uniaxial_extension
+  tutorials/cantilever_beam
+
+
 
 
