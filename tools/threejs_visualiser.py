@@ -258,6 +258,8 @@ def visualise(
         camera.zoom = 1
         display(renderer)
 
+    return vertices, faces
+
 def make_text(text, position=(0, 0, 0), colour='white', size=0.05):
     """
     Return a text object at the specified location with a given height
