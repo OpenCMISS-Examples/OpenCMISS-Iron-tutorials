@@ -27,6 +27,7 @@ oc
     │       start-singleuser.sh
     │       start-ssh-server.sh
     |       start-pycharm.sh
+    |       start-functional-tests.sh
     |       mount-shared-drive.sh
     │       fix-permissions
     |
