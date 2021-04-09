@@ -2,3 +2,4 @@ sphinx-copybutton
 nbsphinx
 nbsphinx-link
 recommonmark
+docutils==0.16
